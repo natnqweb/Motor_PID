@@ -20,7 +20,7 @@ use of this class
 
 
 #define IN1 10 //A1-A  input of a motor driver
-
+//when  your dc motor is not working properly try to sawp pins ENCA WITH ENCB or IN2 with IN1
 
 motor motor1(ENCA, ENCB, IN1, IN2);
 
