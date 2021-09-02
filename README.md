@@ -1,5 +1,5 @@
-# Motor_PID
-Natan Lisowski 
+# Motor_PID HG7881_L9110
+# Natan Lisowski 
 
 // this library let you control motor with pwm signal  
 
