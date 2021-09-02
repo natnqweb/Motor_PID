@@ -1,9 +1,9 @@
-//author:: Natan :Lisowski
+//author:: Natan Lisowski
 // this library let you control motor with pwm signal 
 //this works with HG7881 Hbridge  L9110S
 //link to repository
 //https://github.com/natnqweb/Motor_PID
-// library inspired by curiores
+// library inspired by Curio Res
 // curiores encoder control
 #ifndef Motor_PID_h
 #define Motor_PID_h
