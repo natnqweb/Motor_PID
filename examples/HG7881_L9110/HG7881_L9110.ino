@@ -2,7 +2,7 @@
  * PID Basic Example
  
  ********************************************************/
-
+ //when your dc motor is not working properly try to sawp pins ENCA WITH ENCB or IN2 with IN1
 #include <Motor_PID.h>
 #define ENCA 2 // YELLOW from polulu
 #define ENCB 3 // WHITE from polulu
