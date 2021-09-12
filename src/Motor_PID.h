@@ -1,9 +1,9 @@
-//author:: Natan Lisowski
+//author:: Natan :Lisowski
 // this library let you control motor with pwm signal 
 //this works with HG7881 Hbridge  L9110S
 //link to repository
-//https://github.com/natnqweb/Motor_PID
-// library inspired by Curio Res
+//
+// library inspired by https://github.com/curiores/ArduinoTutorials
 // curiores encoder control
 #ifndef Motor_PID_h
 #define Motor_PID_h
@@ -16,13 +16,13 @@ class motor
 public:
 	float kp, kd, ki;//your pid variables
 	bool motor_on; //this variable let the pwm signal go
-	motor(uint8_t ENCA, uint8_t ENCB, uint8_t IN1, uint8_t IN2);// constructor 
+	motor(uint8_t ENCA, uint8_t ENCB, uint8_t IN1, uint8_t IN2,uint8_t pwmpin=0,int lower_limit=50,int upper_limit=255);// constructor 
 	~motor(){};
-	void start(int target);// place this in loop without delays
+	void start(long target);// place this in loop without delays
 	void init(float kp, float kd, float ki);// this function initializes pid regulator
 	void turn_on(); // changes motor_on variable to true
 	void turn_off();// changes motor_on variable to false
-	volatile int posi; // position of rotary encoder \ number of pulses
+	volatile long posi; // position of rotary encoder \ number of pulses
 
 private:
 	uint8_t ENCA, ENCB, IN2, IN1;
@@ -30,9 +30,10 @@ private:
 	void readEncoder();
 	void RisingInterrupt();// function for detecting rising edge 
 	bool buffer;
-
+	uint8_t _pwmpin=0;
+	int _upper_limit=0,_lower_limit=0;
 	long prevT;
-	int target;
+	long target;
 	float eprev, eintegral;
 };
 #endif
