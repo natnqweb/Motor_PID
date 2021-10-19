@@ -10,3 +10,14 @@ start	KEYWORD2
 init	KEYWORD2
 turn_on	KEYWORD2
 turn_off	KEYWORD2
+get_position  KEYWORD2
+set_position  KEYWORD2
+set_target KEYWORD2
+get_target KEYWORD2
+limit KEYWORD2
+posi  KEYWORD2
+# Variables (KEYWORD3)
+kp KEYWORD3
+kd KEYWORD3
+ki KEYWORD3
+
