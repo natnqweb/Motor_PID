@@ -1,0 +1,12 @@
+# Syntax Coloring Map For Motor_PID
+
+# Classes (KEYWORD1)
+motor KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+start	KEYWORD2
+init	KEYWORD2
+turn_on	KEYWORD2
+turn_off	KEYWORD2
