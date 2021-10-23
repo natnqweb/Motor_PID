@@ -16,6 +16,7 @@ set_target KEYWORD2
 get_target KEYWORD2
 limit KEYWORD2
 posi  KEYWORD2
+target_reached KEYWORD2
 # Variables (KEYWORD3)
 kp KEYWORD3
 kd KEYWORD3

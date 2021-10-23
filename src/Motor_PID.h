@@ -8,6 +8,7 @@
 #ifndef Motor_PID_h
 #define Motor_PID_h
 #include <Arduino.h>
+#include <math.h>
 #include <util/atomic.h> // For the ATOMIC_BLOCK macro
 
 class motor
@@ -23,11 +24,13 @@ public:
 	void turn_on();							 // changes motor_state variable to true
 	void turn_off();						 // changes motor_state variable to false
 	volatile long posi;						 // position of rotary encoder \ number of pulses
-	void set_position(volatile long posi=0);
+	void set_position(float posi=0);
 	volatile long get_position();
-	void set_target(long );
+	void set_target(float );
 	long get_target();
 	void limit(int,int);
+	bool target_reached();// check if target position is reached by motor
+	
 
 private:
 	uint8_t ENCA, ENCB, IN2, IN1;
@@ -40,5 +43,6 @@ private:
 	long prevT;
 	long target;
 	float eprev, eintegral;
+	bool target_is_reached=false;
 };
 #endif

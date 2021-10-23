@@ -59,7 +59,6 @@ void motor::setMotor(int dir, int pwmVal, int in1, int in2)
 void motor::start()
 {
 
-  
   long currT = micros();
   RisingInterrupt();
   // time difference
@@ -98,7 +97,16 @@ void motor::start()
   {
     dir = -1;
   }
-  e==0?turn_off():turn_on();
+   if(floor(e)==0)
+  {
+	  turn_off();
+	  target_is_reached=true;
+  }
+  else
+  {
+	  target_is_reached=false;
+  }
+  
 
   // signal the motor
   setMotor(dir, pwr, IN1, IN2);
@@ -130,19 +138,27 @@ void motor::turn_off()
   (_pwmpin != 0) ? digitalWrite(IN1, 0) : analogWrite(IN1, 0);
   (_pwmpin != 0) ? digitalWrite(IN2, 0) : analogWrite(IN2, 0);
 }
-void motor::set_position(volatile long posi){
-	this->posi=posi;
+void motor::set_position(float posi)
+{
+  this->posi = (volatile long)round(posi);
 }
-volatile long motor::get_position(){
-	return posi;
+volatile long motor::get_position()
+{
+  return posi;
 }
-void motor::set_target(long target){
-	this->target=target;
+void motor::set_target(float target)
+{
+  this->target = (long)round(target);
 }
-long motor::get_target(){
-	return target;
+long motor::get_target()
+{
+  return target;
 }
-void motor::limit(int lower_limit,int upper_limit){
-	_lower_limit=lower_limit;
-	_upper_limit=upper_limit;
+void motor::limit(int lower_limit, int upper_limit)
+{
+  _lower_limit = lower_limit;
+  _upper_limit = upper_limit;
+}
+bool motor::target_reached(){
+	return target_is_reached;
 }
