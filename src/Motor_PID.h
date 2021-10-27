@@ -29,7 +29,7 @@ public:
 	void set_target(float );
 	long get_target();
 	void limit(int,int);
-	bool target_reached();// check if target position is reached by motor
+	bool target_reached(bool reset=false);// check if target position is reached by motor
 	
 
 private:

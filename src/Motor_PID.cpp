@@ -103,7 +103,7 @@ void motor::start()
 	  target_is_reached=true;
   }
   else
-  {
+  {	turn_on();
 	  target_is_reached=false;
   }
   
@@ -159,6 +159,8 @@ void motor::limit(int lower_limit, int upper_limit)
   _lower_limit = lower_limit;
   _upper_limit = upper_limit;
 }
-bool motor::target_reached(){
+bool motor::target_reached(bool reset){
+	if(reset)
+		target_is_reached=false;
 	return target_is_reached;
 }
