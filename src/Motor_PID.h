@@ -4,12 +4,12 @@
 //link to repository
 //
 // library inspired by https://github.com/curiores/ArduinoTutorials
-// curiores encoder control
+//  encoder motor control
 #ifndef Motor_PID_h
 #define Motor_PID_h
 #include <Arduino.h>
 #include <math.h>
-#include <util/atomic.h> // For the ATOMIC_BLOCK macro
+//#include <util/atomic.h> // For the ATOMIC_BLOCK macro
 
 class motor
 
@@ -23,9 +23,9 @@ public:
 	void init(float kp, float ki, float kd); // this function initializes pid regulator
 	void turn_on();							 // changes motor_state variable to true
 	void turn_off();						 // changes motor_state variable to false
-	volatile long posi;						 // position of rotary encoder \ number of pulses
+	long posi;						 // position of rotary encoder \ number of pulses
 	void set_position(float posi=0);
-	volatile long get_position();
+	long get_position();
 	void set_target(float );
 	long get_target();
 	void limit(int,int);

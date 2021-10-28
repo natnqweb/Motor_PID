@@ -65,15 +65,15 @@ void motor::start()
 
   float deltaT = ((float)(currT - prevT)) / (1.0e6);
   prevT = currT;
-
-  long pos = 0;
-  ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-  {
-    pos = posi;
-  }
+// changed this in version 2 to normal long it is not necessary when we are not using interrupts
+  //long pos = 0;
+  //ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+  //{
+   // pos = posi;
+ // }
 
   // error
-  long e = pos - target;
+  long e = posi - target;
 
   // derivative
   float dedt = (e - eprev) / (deltaT);
@@ -140,9 +140,9 @@ void motor::turn_off()
 }
 void motor::set_position(float posi)
 {
-  this->posi = (volatile long)round(posi);
+  this->posi = (long)round(posi);
 }
-volatile long motor::get_position()
+long motor::get_position()
 {
   return posi;
 }
