@@ -35,25 +35,25 @@ void motor::RisingInterrupt()
     }
   }
 }
-void motor::setMotor(int dir, int pwmVal, int in1, int in2)
+void motor::setMotor(int dir, int pwmVal)
 {
   pwmVal = constrain(pwmVal, _lower_limit, _upper_limit);
   if (_pwmpin != 0)
     analogWrite(_pwmpin, pwmVal);
   if (dir == 1 && motor_state == 1)
   {
-    (_pwmpin != 0) ? digitalWrite(in1, 1) : analogWrite(in1, pwmVal);
-    (_pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
+    (_pwmpin != 0) ? digitalWrite(IN1, 1) : analogWrite(IN1, pwmVal);
+    (_pwmpin != 0) ? digitalWrite(IN2, 0) : analogWrite(IN2, 0);
   }
   else if (dir == -1 && motor_state == 1)
   {
-    (_pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
-    (_pwmpin != 0) ? digitalWrite(in2, 1) : analogWrite(in2, pwmVal);
+    (_pwmpin != 0) ? digitalWrite(IN1, 0) : analogWrite(IN1, 0);
+    (_pwmpin != 0) ? digitalWrite(IN2, 1) : analogWrite(IN2, pwmVal);
   }
   else
   {
-    (_pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
-    (_pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in2, 0);
+    (_pwmpin != 0) ? digitalWrite(IN1, 0) : analogWrite(IN1, 0);
+    (_pwmpin != 0) ? digitalWrite(IN1, 0) : analogWrite(IN2, 0);
   }
 }
 void motor::start()
@@ -97,9 +97,10 @@ void motor::start()
   {
     dir = -1;
   }
-   if(floor(e)==0)
+   if(e==0)
   {
 	  turn_off();
+	
 	  target_is_reached=true;
   }
   else
@@ -109,7 +110,7 @@ void motor::start()
   
 
   // signal the motor
-  setMotor(dir, pwr, IN1, IN2);
+  setMotor(dir, pwr);
 
   // store previous error
   eprev = e;
@@ -132,12 +133,15 @@ void motor::turn_on()
 }
 void motor::turn_off()
 {
+	
   motor_state = 0;
   if (_pwmpin != 0)
     analogWrite(_pwmpin, 0);
   (_pwmpin != 0) ? digitalWrite(IN1, 0) : analogWrite(IN1, 0);
   (_pwmpin != 0) ? digitalWrite(IN2, 0) : analogWrite(IN2, 0);
+	
 }
+
 void motor::set_position(float posi)
 {
   this->posi = (long)round(posi);
@@ -164,3 +168,4 @@ bool motor::target_reached(bool reset){
 		target_is_reached=false;
 	return target_is_reached;
 }
+
