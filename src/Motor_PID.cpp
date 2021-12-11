@@ -117,8 +117,8 @@ void motor::start()
 }
 void motor::readEncoder()
 {
-  int b = digitalRead(ENCB);
-  if (b > 0)
+  bool b = digitalRead(ENCB);
+  if (b)
   {
     posi++;
   }
