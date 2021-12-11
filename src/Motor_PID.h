@@ -34,7 +34,7 @@ public:
 
 private:
 	uint8_t ENCA, ENCB, IN2, IN1;
-	void setMotor(int dir, int pwmVal);
+	void setMotor(int& dir, int &pwmVal);
 	void readEncoder();
 	void RisingInterrupt(); // function for detecting rising edge
 	bool buffer;

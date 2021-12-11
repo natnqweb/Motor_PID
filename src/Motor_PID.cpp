@@ -35,7 +35,7 @@ void motor::RisingInterrupt()
     }
   }
 }
-void motor::setMotor(int dir, int pwmVal)
+void motor::setMotor(int &dir, int &pwmVal)
 {
   pwmVal = constrain(pwmVal, _lower_limit, _upper_limit);
   if (_pwmpin != 0)
