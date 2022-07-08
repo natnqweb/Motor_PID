@@ -35,7 +35,7 @@ void motor::RisingInterrupt()
     }
   }
 }
-void motor::setMotor(int &dir, int &pwmVal)
+void motor::setMotor(int dir, int pwmVal)
 {
   pwmVal = constrain(pwmVal, _lower_limit, _upper_limit);
   if (_pwmpin != 0)
@@ -61,16 +61,10 @@ void motor::start()
 
   long currT = micros();
   RisingInterrupt();
-  // time difference
 
+  // time difference
   float deltaT = ((float)(currT - prevT)) / (1.0e6);
   prevT = currT;
-// changed this in version 2 to normal long it is not necessary when we are not using interrupts
-  //long pos = 0;
-  //ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-  //{
-   // pos = posi;
- // }
 
   // error
   long e = posi - target;
@@ -97,17 +91,17 @@ void motor::start()
   {
     dir = -1;
   }
-   if(e==0)
+  if (e == 0)
   {
-	  turn_off();
-	
-	  target_is_reached=true;
+    turn_off();
+
+    target_is_reached = true;
   }
   else
-  {	turn_on();
-	  target_is_reached=false;
+  {
+    turn_on();
+    target_is_reached = false;
   }
-  
 
   // signal the motor
   setMotor(dir, pwr);
@@ -133,13 +127,12 @@ void motor::turn_on()
 }
 void motor::turn_off()
 {
-	
+
   motor_state = 0;
   if (_pwmpin != 0)
     analogWrite(_pwmpin, 0);
   (_pwmpin != 0) ? digitalWrite(IN1, 0) : analogWrite(IN1, 0);
   (_pwmpin != 0) ? digitalWrite(IN2, 0) : analogWrite(IN2, 0);
-	
 }
 
 void motor::set_position(float posi)
@@ -163,9 +156,9 @@ void motor::limit(int lower_limit, int upper_limit)
   _lower_limit = lower_limit;
   _upper_limit = upper_limit;
 }
-bool motor::target_reached(bool reset){
-	if(reset)
-		target_is_reached=false;
-	return target_is_reached;
+bool motor::target_reached(bool reset)
+{
+  if (reset)
+    target_is_reached = false;
+  return target_is_reached;
 }
-
