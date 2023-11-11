@@ -23,9 +23,9 @@ public:
 	long posi{ 0 };           // position of rotary encoder \ number of pulses
 	void set_position(float posi = 0);
 	long get_position();
-	void set_target(float);
+	void set_target(float target);
 	long get_target();
-	void limit(int, int);
+	void limit(int lower_limit, int upper_limit);
 	bool target_reached(bool reset = false); // check if target position is reached by motor
 
 private:
