@@ -6,9 +6,9 @@ Motor::Motor(uint8_t enca, uint8_t encb, uint8_t in1, uint8_t in2, uint8_t pwmpi
   this->encb = encb;
   this->in1 = in1;
   this->in2 = in2;
-  _pwmpin = pwmpin;
-  _upper_limit = upper_limit;
-  _lower_limit = lower_limit;
+  this->pwmpin = pwmpin;
+  this->upper_limit = upper_limit;
+  this->lower_limit = lower_limit;
 }
 
 void Motor::init(double kp, double ki, double kd)
@@ -18,8 +18,8 @@ void Motor::init(double kp, double ki, double kd)
   this->ki = ki;
   pinMode(enca, INPUT);
   pinMode(encb, INPUT);
-  if (_pwmpin != 0)
-    pinMode(_pwmpin, OUTPUT);
+  if (pwmpin != 0)
+    pinMode(pwmpin, OUTPUT);
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
   motor_state = 1;
@@ -40,23 +40,23 @@ void Motor::rising_interrupt()
 
 void Motor::set_motor(int dir, int pwm_val)
 {
-  pwm_val = constrain(pwm_val, _lower_limit, _upper_limit);
-  if (_pwmpin != 0)
-    analogWrite(_pwmpin, pwm_val);
+  pwm_val = constrain(pwm_val, lower_limit, upper_limit);
+  if (pwmpin != 0)
+    analogWrite(pwmpin, pwm_val);
   if (dir == 1 && motor_state == 1)
   {
-    (_pwmpin != 0) ? digitalWrite(in1, 1) : analogWrite(in1, pwm_val);
-    (_pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
+    (pwmpin != 0) ? digitalWrite(in1, 1) : analogWrite(in1, pwm_val);
+    (pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
   }
   else if (dir == -1 && motor_state == 1)
   {
-    (_pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
-    (_pwmpin != 0) ? digitalWrite(in2, 1) : analogWrite(in2, pwm_val);
+    (pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
+    (pwmpin != 0) ? digitalWrite(in2, 1) : analogWrite(in2, pwm_val);
   }
   else
   {
-    (_pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
-    (_pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
+    (pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
+    (pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
   }
 }
 
@@ -124,10 +124,10 @@ void Motor::turn_on()
 void Motor::turn_off()
 {
   motor_state = 0;
-  if (_pwmpin != 0)
-    analogWrite(_pwmpin, 0);
-  (_pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
-  (_pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
+  if (pwmpin != 0)
+    analogWrite(pwmpin, 0);
+  (pwmpin != 0) ? digitalWrite(in1, 0) : analogWrite(in1, 0);
+  (pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
 }
 
 void Motor::set_position(double position)
@@ -152,8 +152,8 @@ long Motor::get_target()
 
 void Motor::limit(int lower_limit, int upper_limit)
 {
-  _lower_limit = lower_limit;
-  _upper_limit = upper_limit;
+  this->lower_limit = lower_limit;
+  this->upper_limit = upper_limit;
 }
 
 bool Motor::target_reached(bool reset)
