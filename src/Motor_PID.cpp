@@ -11,7 +11,7 @@ Motor::Motor(uint8_t enca, uint8_t encb, uint8_t in1, uint8_t in2, uint8_t pwmpi
   _lower_limit = lower_limit;
 }
 
-void Motor::init(float kp, float ki, float kd)
+void Motor::init(double kp, double ki, double kd)
 {
   this->kp = kp;
   this->kd = kd;
@@ -65,18 +65,18 @@ void Motor::start()
   long curr_t = micros();
   rising_interrupt();
 
-  float delta_t = ((float)(curr_t - prev_t)) / (1.0e6);
+  double delta_t = ((double)(curr_t - prev_t)) / (1.0e6);
   prev_t = curr_t;
 
   long e = posi - target;
 
-  float dedt = (e - eprev) / (delta_t);
+  double dedt = ((double)e - eprev) / (delta_t);
 
   eintegral = eintegral + e * delta_t;
 
-  float u = kp * e + kd * dedt + ki * eintegral;
+  double u = kp * (double)e + kd * dedt + ki * eintegral;
 
-  float pwr = fabs(u);
+  double pwr = fabs(u);
   if (pwr > 255)
   {
     pwr = 255;
@@ -130,7 +130,7 @@ void Motor::turn_off()
   (_pwmpin != 0) ? digitalWrite(in2, 0) : analogWrite(in2, 0);
 }
 
-void Motor::set_position(float position)
+void Motor::set_position(double position)
 {
   posi = (long)round(position);
 }
@@ -140,7 +140,7 @@ long Motor::get_position()
   return posi;
 }
 
-void Motor::set_target(float target)
+void Motor::set_target(double target)
 {
   this->target = (long)round(target);
 }

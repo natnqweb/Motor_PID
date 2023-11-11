@@ -12,18 +12,18 @@
 class Motor
 {
 public:
-	float kp = 0.0f, kd = 0.0f, ki = 0.0f;  // your pid variables
+	double kp = 0.0f, kd = 0.0f, ki = 0.0f;  // your pid variables
 	bool motor_state{ false };                 // this variable let the pwm signal go
 	Motor(uint8_t enca, uint8_t encb, uint8_t in1, uint8_t in2, uint8_t pwmpin = 0, int lower_limit = 50, int upper_limit = 255); // constructor
 	~Motor() {};
 	void start();           // place this in loop without delays
-	void init(float kp, float ki, float kd); // this function initializes pid regulator
+	void init(double kp, double ki, double kd); // this function initializes pid regulator
 	void turn_on();         // changes motor_state variable to true
 	void turn_off();        // changes motor_state variable to false
 	long posi{ 0 };           // position of rotary encoder \ number of pulses
-	void set_position(float posi = 0);
+	void set_position(double posi = 0);
 	long get_position();
-	void set_target(float target);
+	void set_target(double target);
 	long get_target();
 	void limit(int lower_limit, int upper_limit);
 	bool target_reached(bool reset = false); // check if target position is reached by motor
@@ -38,6 +38,6 @@ private:
 	int upper_limit = 0, lower_limit = 0;
 	long prev_t{ 0 };
 	long target{ 0 };
-	float eprev = 0, eintegral = 0;
+	double eprev = 0, eintegral = 0;
 	bool target_is_reached = false;
 };
